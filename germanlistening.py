@@ -50,6 +50,7 @@ for i in range(rounds):
     segment_duration = 10 * 1000
     max_start = len(audio) - segment_duration
     random_start = random.randint(0, max_start)
+    random_start_seconds = random_start / 1000
     random_segment = audio[random_start : random_start + segment_duration]
     random_segment.export(f"random_segment_{i}.mp3", format="mp3")
 
