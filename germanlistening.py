@@ -8,18 +8,22 @@ from playsound import playsound
 
 
 
-audio = AudioSegment.from_file("Fabrik-Besuch.webm")
 
 URL = 'https://www.youtube.com/watch?v=XYC3mXpQ9zI'
 
 ydl_opts = {
     'format': 'bestaudio/best',
+    'outtmpl': 'audio.webm'
 }
 
+url = input("Which video do you want to listen to?")
+
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-    file_path = Path("Fabrik-Besuch.webm")
+    file_path = Path('audio.webm')
     if not file_path.exists():
-     ydl.download([URL])
+     ydl.download([url])
+
+audio = AudioSegment.from_file('audio.webm')
 
 segment_duration = 10 * 1000
 
