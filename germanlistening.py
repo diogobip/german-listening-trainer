@@ -7,22 +7,7 @@ from pathlib import Path
 from playsound import playsound
 from youtube_transcript_api import YouTubeTranscriptApi
 
-# Video transcript download
-video_id = 'i_e410lM0Mc' # Replace with your 11-character video ID
 
-try:
-    # Fetch transcript data
-    transcript = YouTubeTranscriptApi.get_transcript(video_id)
-
-    for entry in transcript:
-        text = entry['text']
-        start = entry['start']        # Start time in seconds
-        duration = entry['duration']  # How long the text stays on screen
-        
-        print(f"[{start}s - {duration}s]: {text}")
-
-except Exception as e:
-    print(f"An error occurred: {e}")
 
 rounds = 10 
 
@@ -37,6 +22,22 @@ ydl_opts = {
 url = input("Which video do you want to listen to?")
 
 video_id = url.split("v=")[1]
+
+# Transcript 
+try:
+    # Fetch transcript data
+    ytt_api = YouTubeTranscriptApi()
+    transcript = ytt_api.fetch(video_id, languages=['de'])
+
+    for entry in transcript:
+        text = entry.text
+        start = entry.start        # Start time in seconds
+        duration = entry.duration  # How long the text stays on screen
+        
+        print(f"[{start}s - {duration}s]: {text}")
+
+except Exception as e:
+    print(f"An error occurred: {e}")
 
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
     file_path = Path('audio.webm')
