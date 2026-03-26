@@ -2,17 +2,17 @@
 import yt_dlp
 from pydub import AudioSegment
 import random 
-import pathlib
 from pathlib import Path
 from playsound import playsound
 from youtube_transcript_api import YouTubeTranscriptApi
+
+transcription_entries = []
+
 
 
 
 rounds = 10 
 
-
-URL = 'https://www.youtube.com/watch?v=XYC3mXpQ9zI'
 
 ydl_opts = {
     'format': 'bestaudio/best',
@@ -30,11 +30,9 @@ try:
     transcript = ytt_api.fetch(video_id, languages=['de'])
 
     for entry in transcript:
-        text = entry.text
-        start = entry.start        # Start time in seconds
-        duration = entry.duration  # How long the text stays on screen
         
-        print(f"[{start}s - {duration}s]: {text}")
+        
+        transcription_entries.append(entry)
 
 except Exception as e:
     print(f"An error occurred: {e}")
@@ -53,8 +51,22 @@ for i in range(rounds):
     random_start_seconds = random_start / 1000
     random_segment = audio[random_start : random_start + segment_duration]
     random_segment.export(f"random_segment_{i}.mp3", format="mp3")
+    playsound(f"random_segment_{i}.mp3")
 
-playsound('random_segment.mp3')
+    entry_text = []
 
-print(video_id)
+    for entry in transcription_entries:
+        if entry.start >= random_start_seconds and entry.start <= random_start_seconds + 10:
+            entry_text.append(entry.text)
+    
+    correct_answer = " ".join(entry_text)
+
+    print(f"Correct answer: {correct_answer}")
+
+        
+
+
+
+
+
 
