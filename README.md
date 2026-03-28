@@ -1,11 +1,11 @@
 # 🎧 German Listening Trainer
 
-A desktop app to improve German listening comprehension using real news sentences from Deutsche Welle.
+A desktop app to improve German listening comprehension using real news sentences from Youtube videos
 
 ## How it works
 
-- Fetches real sentences from Deutsche Welle's German news RSS feed
-- Reads them aloud using text-to-speech
+- Fetches audios and transcripts from youtubes selected users videos
+- An audio plays automatically 
 - You pick the correct sentence from 4 options
 - Tracks your score at the end of each session
 

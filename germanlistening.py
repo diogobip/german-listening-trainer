@@ -63,6 +63,9 @@ for i in range(rounds):
 
     print(f"Correct answer: {correct_answer}")
 
+# Decoys
+decoys = random.sample([s.text for s in transcription_entries if s.text != correct_answer], 3)
+
         
 
 
