@@ -8,9 +8,6 @@ from youtube_transcript_api import YouTubeTranscriptApi
 
 transcription_entries = []
 
-
-
-
 rounds = 10 
 
 
@@ -55,6 +52,9 @@ for i in range(rounds):
 
     entry_text = []
 
+    score = 0
+    rounds = 5
+
     for entry in transcription_entries:
         if entry.start >= random_start_seconds and entry.start <= random_start_seconds + 10:
             entry_text.append(entry.text)
@@ -62,9 +62,30 @@ for i in range(rounds):
     correct_answer = " ".join(entry_text)
 
     print(f"Correct answer: {correct_answer}")
+    # Decoys
+    decoys = random.sample([s.text for s in transcription_entries if s.text != correct_answer], 3)
 
-# Decoys
-decoys = random.sample([s.text for s in transcription_entries if s.text != correct_answer], 3)
+    choices = decoys + [correct_answer]
+    random.shuffle(choices)
+    correct_index = choices.index(correct_answer) + 1
+
+    print("Which sentence did you hear? ")
+    for j, choice in enumerate(choices):
+        print(f" {j+1}. {choice}")
+    
+    print("\nYour answer (1-4):")
+    answer = input().strip()
+
+    if answer == str(correct_index):
+        print("✅ Correct!")
+        score += 1
+    else:
+        print(f"❌ Wrong! The correct answer was {correct_index}: {correct_answer}")
+
+
+
+
+
 
         
 
